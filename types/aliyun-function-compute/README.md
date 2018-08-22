@@ -15,17 +15,19 @@ Provide type definitions for Alibaba Cloud's serverless computing service: Funct
 - Trigger/Event definitions: [CN](https://help.aliyun.com/document_detail/70140.html)
 
 ### Event Definitons Covered
- 
-- [x] Object Storage Service(OSS) event
-- [x] CDN event
-- [x] Log service(SLS) event
-- [x] Cron(time-triggered) event
-- [ ] API Gateway event
-- [x] TableStore event
-- [ ] IoT event
-- [ ] DataHub event
 
-- [ ] HTTP-triggered event
+- Event Driven
+  - [x] Object Storage Service(OSS) event
+  - [x] CDN event
+  - [x] Log service(SLS) event
+  - [x] Cron(time-triggered) event
+  - [x] API Gateway event
+  - [x] TableStore event
+  - [x] IoT event
+  - [x] DataHub event
+
+- Non-event Driven
+  - [ ] HTTP-triggered event
 
 ### Credits
 

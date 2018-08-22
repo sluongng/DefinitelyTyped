@@ -7,17 +7,26 @@
 
 /**
  * AliCloudRegion
- * https://help.aliyun.com/document_detail/52984.html?#h2-u670Du52A1u5730u57403
+ * https://help.aliyun.com/document_detail/40654.html
  */
-export type AliCloudRegion = 'cn-hangzhou'
-| 'cn-shanghai'
-| 'cn-beijing'
-| 'cn-shenzhen'
-| 'cn-hongkong'
-| 'ap-northeast-1'
-| 'ap-southeast-1'
-| 'ap-southeast-2'  
-| 'eu-central-1';
+export type AliCloudRegion = 'Cn-qingdao'
+| 'Cn-beijing'
+| 'Cn-zhangjiakou'
+| 'Cn-huhehaote'
+| 'Cn-hangzhou'
+| 'Cn-shanghai'
+| 'Cn-shenzhen'
+| 'Cn-hongkong'
+| 'Ap-southeast-1'
+| 'Ap-southeast-2'
+| 'Ap-southeast-3'
+| 'Ap-southeast-5'
+| 'Ap-south-1'
+| 'Ap-northeast-1'
+| 'Us-west-1'
+| 'Us-east-1'
+| 'Eu-central-1'
+| 'Me-east-1';
 
 /**
  * CloudFunctionContext contains the Context Parameter definition
@@ -49,6 +58,61 @@ export interface ServiceContext {
     name: string;
     logProject: string;
     logStore: string;
+}
+
+/**
+ * IotEventRecord
+ * https://help.aliyun.com/document_detail/70140.html#IoT
+ */
+export interface IotEventRecord {
+    [name: string]: string;
+}
+
+/**
+ * DataHubEventRecord
+ * https://help.aliyun.com/document_detail/70140.html#Datahub
+ */
+export interface DataHubEventRecord {
+    eventSource: "acs:datahub";
+    eventName: "acs:datahub:putRecord";
+    eventSourceARN: string;
+    region: AliCloudRegion;
+    records: DataHubRecord[];
+}
+
+export interface DataHubRecord {
+    eventId: string;
+    systemTime: number;
+    data: string;
+}
+
+/**
+ * APIGatewayEventRecord
+ * https://help.aliyun.com/document_detail/70140.html#APIGateway
+ */
+export interface APIGatewayEventRecord {
+    path: string;
+    httpMethod: string;
+    headers: APIGatewayHeader;
+    queryParameters: APIGatewayQueryParam;
+    pathParameters: APIGatewayPathParam;
+    body: string;
+    isBase64Encoded: boolean;
+}
+
+export interface APIGatewayHeader {
+    "X-Ca-Api-Gateway": string;
+    "X-Forwarded-For": string;
+    [name: string]: string;
+}
+
+export interface APIGatewayQueryParam {
+    [name: string]: string;
+}
+
+
+export interface APIGatewayPathParam {
+    [name: string]: string;
 }
 
 /**
