@@ -1,8 +1,187 @@
 // Type definitions for AliCloud Function Compute
-// Project: https://cn.aliyun.com/product/fc
+// Project: https://cn.aliyun.com/product/fc 
+//        | https://www.alibabacloud.com/product/function-compute
 // Definitions by: Son, Luong Ngoc <https://github.com/sluongng>
-// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+// Definitions: https://help.aliyun.com/document_detail/70140.html
 // TypeScript Version: 3.0.1
+
+/**
+ * AliCloudRegion
+ * https://help.aliyun.com/document_detail/52984.html?#h2-u670Du52A1u5730u57403
+ */
+export type AliCloudRegion = 'cn-hangzhou'
+| 'cn-shanghai'
+| 'cn-beijing'
+| 'cn-shenzhen'
+| 'cn-hongkong'
+| 'ap-northeast-1'
+| 'ap-southeast-1'
+| 'ap-southeast-2'  
+| 'eu-central-1';
+
+/**
+ * CloudFunctionContext contains the Context Parameter definition
+ * https://help.aliyun.com/document_detail/74757.html#h4-context-
+ */
+export interface CloudFunctionContext {
+    requestId: string;
+    credentials: CredentialsContext;
+    function: FunctionContext;
+    service: ServiceContext;
+    region: AliCloudRegion;
+    accountId: string;
+}
+
+export interface CredentialsContext {
+    accessKeyId: string;
+    accessKeySecret: string;
+    securityToken: string;
+}
+
+export interface FunctionContext {
+    name: string;
+    handler: string;
+    memory: number;
+    timeout: number;
+}
+
+export interface ServiceContext {
+    name: string;
+    logProject: string;
+    logStore: string;
+}
+
+/**
+ * TableStoreEventRecord
+ * https://help.aliyun.com/document_detail/70140.html#TableStore
+ */
+export interface TableStoreEventRecord {
+    Version: 'Sync-v1';
+    Records: TableStoreRecord[];
+}
+
+export interface TableStoreRecord {
+    Type: 'PutRow'
+    | 'UpdateRow'
+    | 'DeleteRow';
+    Info: TableStoreInfo;
+    PrimaryKey: TableStorePrimaryKey[];
+    Columns: TableStoreColumn[];
+}
+
+export interface TableStoreInfo {
+    Timestamp: number;
+}
+
+export interface TableStorePrimaryKey {
+    ColumnName: string;
+    Value: string | number;
+}
+
+export interface TableStoreColumn {
+    Type: string;
+    ColumnName: string;
+    Value: string | number;
+    Timestamp: number;
+}
+
+/**
+ * SLSEventRecord is the Log Service Trigger event definition
+ * https://help.aliyun.com/document_detail/84386.html
+ */
+export interface SLSEventRecord {
+    jobName: string;
+    taskId: string;
+    cursorTime: number;
+    parameter: SLSParameter;
+    source: SLSSource;
+}
+
+export interface SLSParameter {
+    [name: string]: string;
+}
+
+export interface SLSSource {
+    endpoint: string;
+    projectName: string;
+    logstoreName: string;
+    shardId: number;
+    beginCursor: string;
+    endCursor: string;
+}
+
+/**
+ * CDNEventRecords
+ * https://help.aliyun.com/document_detail/73333.html#h2-cdn-3
+ */
+export interface CDNEventRecords {
+    events: (CachedObjectsEventRecord | LogFileEventRecord)[];
+}
+
+export interface CDNBaseEventRecord<T> {
+    eventName: string;
+    eventParameter: T;
+    eventSource: string;
+    eventTime: string;
+    eventVersion: string;
+    region: AliCloudRegion;
+    resource: ResourceInformation;
+    traceId: string;
+    userIdentity: UserIdentity;
+}
+
+export interface UserIdentity {
+    aliUid: string;
+}
+
+export interface ResourceInformation {
+    domain: string;
+}
+
+export interface CDNDomainEventRecord extends CDNBaseEventRecord<string> {
+    eventName: 'CdnDomainStarted' | 'CdnDomainStopped';
+}
+
+export interface CDNDomainParameter {
+    domain: string;
+    status: string;
+}
+
+export interface CachedObjectsEventRecord extends CDNBaseEventRecord<CachedObjectParameter>{
+    eventName: 'CachedObjectsRefreshed'
+    | 'CachedObjectsPushed'
+    | 'CachedObjectsBlocked';
+}
+
+export interface CachedObjectParameter {
+    createTime: number;
+    domain: string;
+    objectPath: string[];
+    objectType: "File" | "Directory";
+    taskId: number;
+}
+
+export interface LogFileEventRecord extends CDNBaseEventRecord<string>{
+    eventName: 'LogFileCreated';
+}
+
+export interface LogFileParameter {
+    domain: string;
+    endTime: number;
+    startTime: number;
+    filePath: string;
+    fileSize: number;
+}
+
+/**
+ * TimeEventRecord
+ * https://help.aliyun.com/document_detail/68172.html#h3-event-
+ */
+export interface TimeEventRecord {
+    triggerTime: string;
+    triggerName: string;
+    payload: string;
+}
 
 /**
  * OSS Event Trigger
@@ -13,49 +192,61 @@ export interface OSSEventRecords {
 }
 
 export interface OSSEventRecord {
-    eventName: string;
+    eventName: 'Oss:ObjectCreated:PutObject'
+    | 'Oss:ObjectCreated:PutSymlink'
+    | 'Oss:ObjectCreated:PostObject'
+    | 'Oss:ObjectCreated:CopyObject'
+    | 'Oss:ObjectCreated:InitialMultipartUpload'
+    | 'Oss:ObjectCreated:UploadPart'
+    | 'Oss:ObjectCreated:UploadPartCopy'
+    | 'Oss:ObjectCreated:CompleteMultipartUpload'
+    | 'Oss:ObjectCreated:AppendObject'
+    | 'Oss:ObjectCreated:*'
+    | 'Oss:ObjectRemoved:DeleteObject'
+    | 'Oss:ObjectRemoved:DeleteObjects'
+    | 'Oss:ObjectRemoved:AbortMultipartUpload';
     eventSource: string;
     eventTime: string;
     eventVersion: string;
     oss: OSSMetaRecord;
-    region: string;
+    region: AliCloudRegion;
     requestParameters: OSSRequestParameters;
     resposeElements: OSSResponseElements;
     userIdentity: OSSUserIdentity;
 }
 
-export OSSMetaRecord {
+export interface OSSMetaRecord {
     bucket: OSSBucketMetaRecord;
     object: OSSObjectMetaRecord;
     ossSchemaVersion: string;
     ruleId: string;
 }
 
-export OSSBucketMetaRecord {
+export interface OSSBucketMetaRecord {
     arn: string;
     name: string;
     ownerIdentity: string;
     virtualBucket: string;
 }
 
-export OSSObjectMetaRecord {
+export interface OSSObjectMetaRecord {
     deltaSize: number;
     eTag: string;
     key: string;
     size: number;
 }
 
-export OSSRequestParameters {
+export interface OSSRequestParameters {
     sourceIPAddress: string;
     [name: string]: string;
 }
 
-export OSSResponseElements {
+export interface OSSResponseElements {
     requestId: string;
     [name: string]: string;
 }
 
-export OSSUserIdentity {
+export interface OSSUserIdentity {
     principalId: string;
     [name: string]: string;
 }

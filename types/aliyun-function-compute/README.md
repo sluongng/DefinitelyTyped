@@ -12,13 +12,16 @@ Provide type definitions for Alibaba Cloud's serverless computing service: Funct
 - [English](https://www.alibabacloud.com/help/product/50980.htm)
 - [Chinese](https://help.aliyun.com/product/50980.html)
 
+- Trigger/Event definitions: [CN](https://help.aliyun.com/document_detail/70140.html)
+
 ### Event Definitons Covered
  
-- [ ] Object Storage Service(OSS) event
-- [ ] CDN event
-- [ ] Log service(SLS) event
+- [x] Object Storage Service(OSS) event
+- [x] CDN event
+- [x] Log service(SLS) event
+- [x] Cron(time-triggered) event
 - [ ] API Gateway event
-- [ ] TableStore event
+- [x] TableStore event
 - [ ] IoT event
 - [ ] DataHub event
 
