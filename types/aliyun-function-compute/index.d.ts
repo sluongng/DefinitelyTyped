@@ -9,24 +9,24 @@
  * AliCloudRegion
  * https://help.aliyun.com/document_detail/40654.html
  */
-export type AliCloudRegion = 'Cn-qingdao'
-| 'Cn-beijing'
-| 'Cn-zhangjiakou'
-| 'Cn-huhehaote'
-| 'Cn-hangzhou'
-| 'Cn-shanghai'
-| 'Cn-shenzhen'
-| 'Cn-hongkong'
-| 'Ap-southeast-1'
-| 'Ap-southeast-2'
-| 'Ap-southeast-3'
-| 'Ap-southeast-5'
-| 'Ap-south-1'
-| 'Ap-northeast-1'
-| 'Us-west-1'
-| 'Us-east-1'
-| 'Eu-central-1'
-| 'Me-east-1';
+export type AliCloudRegion = 'cn-qingdao'
+| 'cn-beijing'
+| 'cn-zhangjiakou'
+| 'cn-huhehaote'
+| 'cn-hangzhou'
+| 'cn-shanghai'
+| 'cn-shenzhen'
+| 'cn-hongkong'
+| 'ap-southeast-1'
+| 'ap-southeast-2'
+| 'ap-southeast-3'
+| 'ap-southeast-5'
+| 'ap-south-1'
+| 'ap-northeast-1'
+| 'us-west-1'
+| 'us-east-1'
+| 'eu-central-1'
+| 'me-east-1';
 
 /**
  * CloudFunctionContext contains the Context Parameter definition
