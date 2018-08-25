@@ -315,3 +315,26 @@ export interface OSSUserIdentity {
     [name: string]: string;
 }
 
+/**
+ * Handler is generic handler definition
+ * for event driven type functions
+ */
+export type Handler<TEvent = any, TResult = any> = (
+    event: TEvent,
+    context: CloudFunctionContext,
+    callback: Callback<TResult>,
+) => void | Promise<TResult>;
+
+export type Callback<TResult = any> = (
+    error?: Error | null | string,
+    result?: TResult
+) => void;
+
+/**
+ * OSSHandler is handler function definition
+ */
+export type OSSHandler = Handler<OSSEventRecords, void>;
+
+export type APIGatewayHandler = Handler<APIGatewayEventRecord, void>;
+
+export type CDNHandler = Handler<CDNEventRecords, void>;
